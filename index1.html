@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CureTech - Your Health, Our Priority</title>
+    <meta name="description" content="An AI-driven health platform for monitoring your vitals, exploring departments, and booking appointments seamlessly.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js for Health Monitoring Visuals -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts: Poppins and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="text-slate-700">
+
+    <!-- Top Bar / Quick Links -->
+    <div class="bg-slate-800 text-slate-300 text-xs">
+        <div class="container mx-auto px-4 lg:px-6 py-2 flex justify-between items-center">
+            <div>
+                <span>Your Health, Our Priority.</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="nav-btn hover:text-teal-300 transition-colors" data-target="contact-page">Contact Us</a>
+                <span class="text-slate-500">|</span>
+                <a href="#" class="hover:text-teal-300 transition-colors">FAQ</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-100">
+        <nav class="container mx-auto px-4 lg:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="nav-btn flex items-center gap-2 text-2xl font-bold text-teal-500" data-target="home-page">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                    </svg>
+                    <span style="font-family: var(--font-heading);">CureTech</span>
+                </a>
+                <div class="hidden lg:flex items-center space-x-6 font-medium text-slate-600 text-sm">
+                    <a href="#" class="nav-btn hover:text-teal-500 transition-colors" data-target="home-page">Home</a>
+                    <a href="#" class="nav-btn hover:text-teal-500 transition-colors" data-target="monitoring-page">AI Monitoring</a>
+                    <a href="index.html" class="hover:text-teal-500 transition-colors">Medication</a>
+                    <a href="doctor.html" class="nav-btn hover:text-teal-500 transition-colors" data-target="doctors-page">Doctors</a>
+                    
+                    <a href="#" class="nav-btn hover:text-teal-500 transition-colors" data-target="appointments-page">My Appointments</a>
+                </div>
+                <button class="lg:hidden p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page Content -->
+        <div id="home-page" class="page active">
+            <!-- Hero Section -->
+            <section class="hero-gradient py-20 lg:py-32">
+                <div class="container mx-auto px-4 text-center">
+                    <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Your Health, Our Priority.</h1>
+                    <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-8">
+                        Leverage our AI-powered platform to monitor your health, connect with specialists, and take control of your well-being.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <a href="#" data-target="monitoring-page" class="nav-btn bg-teal-500 text-white font-semibold px-8 py-3 rounded-full hover:bg-teal-600 transition-all soft-shadow hover:shadow-lg transform hover:-translate-y-0.5 w-full sm:w-auto">
+                            Check AI Health Monitoring
+                        </a>
+                        <a href="#" data-target="departments-page" class="nav-btn bg-white text-teal-500 font-semibold px-8 py-3 rounded-full hover:bg-teal-50 transition-all soft-shadow hover:shadow-lg transform hover:-translate-y-0.5 border border-slate-200 w-full sm:w-auto">
+                            Book Appointment
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Real-time Stats -->
+            <section class="py-12">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div class="p-4">
+                            <p class="text-4xl font-bold text-teal-500">12,500+</p>
+                            <p class="text-slate-500 mt-1">Patients Served</p>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-4xl font-bold text-teal-500">200+</p>
+                            <p class="text-slate-500 mt-1">Doctors Available</p>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-4xl font-bold text-teal-500">15</p>
+                            <p class="text-slate-500 mt-1">Hospitals Connected</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blood Donation Section -->
+            <section id="blood-donation" class="py-20 bg-rose-50">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-rose-800">Give the Gift of Life</h2>
+                    <p class="max-w-2xl mx-auto text-rose-700 mt-4 mb-8">A single blood donation can save up to three lives. Join our community of heroes and make a difference today.</p>
+                    <a href="#" class="bg-rose-600 text-white font-semibold px-8 py-3 rounded-full hover:bg-rose-700 transition-all soft-shadow hover:shadow-lg transform hover:-translate-y-0.5">
+                        Find a Donation Center
+                    </a>
+                </div>
+            </section>
+
+             <!-- Health & Wellness Insights Section -->
+            <section class="py-20 bg-slate-50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold">Health & Wellness Insights</h2>
+                        <p class="max-w-2xl mx-auto text-slate-600 mt-4">Stay informed with the latest articles and tips from our medical experts.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-xl soft-shadow overflow-hidden soft-shadow-hover transition-shadow duration-300">
+                            <img class="h-48 w-full object-cover" src="https://placehold.co/600x400/a7f3d0/1e293b?text=Healthy+Eating" alt="Healthy food">
+                            <div class="p-6">
+                                <div class="uppercase tracking-wide text-sm text-teal-500 font-semibold">Nutrition</div>
+                                <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">The Top 5 Superfoods for a Healthier Heart</a>
+                                <p class="mt-2 text-slate-500">Discover how incorporating these nutrient-packed foods into your diet can significantly boost your cardiovascular health.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl soft-shadow overflow-hidden soft-shadow-hover transition-shadow duration-300">
+                            <img class="h-48 w-full object-cover" src="https://placehold.co/600x400/bae6fd/1e293b?text=Mindfulness" alt="Person meditating">
+                            <div class="p-6">
+                                <div class="uppercase tracking-wide text-sm text-sky-500 font-semibold">Mental Wellness</div>
+                                <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Mindfulness for Beginners: A 10-Minute Guide</a>
+                                <p class="mt-2 text-slate-500">Learn simple techniques to reduce stress and improve focus, even with a busy schedule.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl soft-shadow overflow-hidden soft-shadow-hover transition-shadow duration-300">
+                            <img class="h-48 w-full object-cover" src="https://placehold.co/600x400/fecaca/1e293b?text=Exercise" alt="Person running">
+                            <div class="p-6">
+                                <div class="uppercase tracking-wide text-sm text-red-500 font-semibold">Fitness</div>
+                                <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">How 30 Minutes of Daily Walking Can Change Your Life</a>
+                                <p class="mt-2 text-slate-500">It's one of the simplest exercises, yet its benefits for physical and mental health are profound. Here's why.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- AI Monitoring Page -->
+        <div id="monitoring-page" class="page">
+            <section id="monitoring" class="py-20 bg-slate-50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 id="monitoring-title" class="text-3xl md:text-4xl font-bold">AI-Powered Health Dashboard</h2>
+                        <p class="max-w-2xl mx-auto text-slate-600 mt-4">Track your key health metrics in one place. Our AI provides personalized insights and recommendations to help you stay healthy.</p>
+                    </div>
+
+                    <!-- User Data Form -->
+                    <div class="max-w-4xl mx-auto mb-12">
+                        <div class="bg-white p-6 rounded-xl soft-shadow">
+                            <h3 class="font-bold text-xl mb-4 text-center">Personalize Your Dashboard</h3>
+                            <form id="health-form" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 items-end">
+                                <div class="sm:col-span-2">
+                                    <label for="user-name" class="block text-xs font-medium text-slate-600">Name</label>
+                                    <input type="text" id="user-name" required class="mt-1 block w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm p-2">
+                                </div>
+                                <div>
+                                    <label for="user-age" class="block text-xs font-medium text-slate-600">Age</label>
+                                    <input type="number" id="user-age" required class="mt-1 block w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm p-2">
+                                </div>
+                                <div>
+                                    <label for="user-height" class="block text-xs font-medium text-slate-600">Height (cm)</label>
+                                    <input type="number" id="user-height" required class="mt-1 block w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm p-2">
+                                </div>
+                                <div>
+                                    <label for="user-weight" class="block text-xs font-medium text-slate-600">Weight (kg)</label>
+                                    <input type="number" id="user-weight" required class="mt-1 block w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm p-2">
+                                </div>
+                                <div class="sm:col-span-2 md:col-span-5">
+                                    <button type="submit" class="w-full bg-teal-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm">Calculate & Update BMI</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="health-metrics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                        <!-- Health metric cards will be injected by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Departments Page -->
+        <div id="departments-page" class="page">
+            <section id="departments" class="py-20">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold">Our Departments of Health</h2>
+                        <p class="max-w-2xl mx-auto text-slate-600 mt-4">Explore our specialized departments, each staffed with expert physicians dedicated to your care.</p>
+                    </div>
+                    <div id="departments-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Department cards will be injected by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Doctors Page -->
+        <div id="doctors-page" class="page">
+            <section id="doctors" class="py-20 bg-slate-50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold">Our Expert Doctors</h2>
+                        <p class="max-w-2xl mx-auto text-slate-600 mt-4">Meet our team of dedicated and experienced medical professionals.</p>
+                    </div>
+                    <div id="doctors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Doctor cards will be injected here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Services Page -->
+        <div id="services-page" class="page">
+            <section id="services" class="py-20">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold">Our Medical Services</h2>
+                        <p class="max-w-2xl mx-auto text-slate-600 mt-4">We offer a wide range of services to meet your healthcare needs.</p>
+                    </div>
+                    <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Service cards will be injected here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- My Appointments Page Content -->
+        <div id="appointments-page" class="page">
+             <section class="py-20 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold">My Appointments</h2>
+                        <p class="max-w-2xl mx-auto text-slate-600 mt-4">Here are your upcoming scheduled appointments. You can manage them from here.</p>
+                    </div>
+                    <div id="appointments-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Appointment cards will be injected here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact-page" class="page">
+            <section class="py-20">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-2xl mx-auto text-center">
+                        <h2 class="text-3xl md:text-4xl font-bold">Get in Touch</h2>
+                        <p class="text-slate-600 mt-4">We're here to help. Send us a message and we'll get back to you as soon as possible.</p>
+                    </div>
+                    <div class="mt-12 max-w-xl mx-auto">
+                        <form id="contact-form" class="bg-white p-8 rounded-xl soft-shadow space-y-4">
+                            <div>
+                                <label for="contact-name" class="block text-sm font-medium text-slate-700">Full Name</label>
+                                <input type="text" id="contact-name" required class="mt-1 block w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 p-2">
+                            </div>
+                            <div>
+                                <label for="contact-email" class="block text-sm font-medium text-slate-700">Email Address</label>
+                                <input type="email" id="contact-email" required class="mt-1 block w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 p-2">
+                            </div>
+                            <div>
+                                <label for="contact-message" class="block text-sm font-medium text-slate-700">Message</label>
+                                <textarea id="contact-message" rows="4" required class="mt-1 block w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 p-2"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full bg-teal-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-teal-600 transition-colors">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact-footer" class="bg-slate-800 text-slate-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-bold text-white mb-4">CureTech</h3>
+                    <p class="text-slate-400">Your Health, Our Priority.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="nav-btn hover:text-white" data-target="contact-page">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Get in Touch</h4>
+                    <p>123 Health St, Wellness City</p>
+                    <p>contact@cure.tech</p>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 text-center pt-8 text-slate-400">
+                &copy; 2024 CureTech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div id="chatbot-container" class="fixed bottom-6 left-6 z-50">
+        <div id="chatbot-window" class="w-80 h-96 bg-white rounded-xl soft-shadow flex flex-col transform scale-95 opacity-0 -translate-y-2 pointer-events-none mb-4">
+            <div class="bg-teal-500 text-white p-3 rounded-t-xl flex justify-between items-center">
+                <h3 class="font-bold text-sm">AI Health Assistant</h3>
+                <button id="close-chatbot-btn" class="text-lg">&times;</button>
+            </div>
+            <div id="chatbot-messages" class="flex-1 p-3 overflow-y-auto flex flex-col space-y-2"></div>
+            <form id="chatbot-form" class="border-t border-slate-200 p-2 flex">
+                <input type="text" id="chatbot-input" placeholder="Ask a question..." class="w-full text-sm p-2 border border-slate-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
+                <button type="submit" class="ml-2 bg-teal-500 text-white p-2 rounded-md hover:bg-teal-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.428A1 1 0 009.894 15V4.106A1 1 0 0010.894 2.553z" /></svg>
+                </button>
+            </form>
+        </div>
+        <button id="chatbot-toggle-btn" class="bg-teal-500 text-white p-4 rounded-full shadow-lg hover:bg-teal-600 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                <path d="M15 7v2a2 2 0 012 2v5a2 2 0 01-2 2h-1l-3 3v-3h-3a2 2 0 01-2-2V9a2 2 0 012-2h4z" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Appointment Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-40 flex items-center justify-center p-4 hidden">
+        <div id="modal-overlay" class="absolute inset-0 bg-black/50 modal-overlay opacity-0"></div>
+        <div id="modal-container" class="bg-white rounded-xl soft-shadow w-full max-w-lg mx-auto z-10 transform scale-95 opacity-0 modal-container">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-title" class="text-2xl font-bold">Book an Appointment</h3>
+                    <button id="modal-close-btn" class="text-2xl leading-none text-slate-500 hover:text-slate-800">&times;</button>
+                </div>
+                <form id="booking-form">
+                    <input type="hidden" id="department-name">
+                    <input type="hidden" id="department-color">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="doctor-select" class="block text-sm font-medium text-slate-700 mb-1">Select a Doctor</label>
+                            <select id="doctor-select" class="w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500"></select>
+                        </div>
+                        <div>
+                            <label for="appointment-date" class="block text-sm font-medium text-slate-700 mb-1">Select a Date</label>
+                            <input type="date" id="appointment-date" required class="w-full border-slate-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Select a Time</label>
+                            <div id="time-slots" class="grid grid-cols-3 gap-2"></div>
+                            <input type="hidden" id="selected-time" required>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-teal-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-teal-600 transition-colors">Confirm Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-20 right-5 bg-teal-500 text-white py-3 px-6 rounded-lg soft-shadow opacity-0 transform translate-x-10 transition-all duration-300 z-50">
+        Appointment Confirmed!
+    </div>
+
+    <script src="scriptt.js"></script>
+
+</body>
+</html>
