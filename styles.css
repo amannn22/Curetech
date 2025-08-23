@@ -1,0 +1,88 @@
+:root {
+    --font-sans: 'Inter', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+    --color-primary: #14b8a6; /* teal-500 */
+    --color-primary-hover: #0d9488; /* teal-600 */
+    --color-bg-light: #f0fdfa; /* teal-50 */
+    --color-bg-base: #ffffff;
+}
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-base);
+    color: #334155; /* slate-700 */
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: #1e293b; /* slate-800 */
+}
+.hero-gradient {
+    background: linear-gradient(135deg, #ccfbf1 0%, #f0fdfa 100%);
+}
+.chart-container {
+    position: relative;
+    height: 120px;
+    width: 120px;
+}
+.chart-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.soft-shadow {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+.soft-shadow-hover:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+}
+/* Page & Animation Styles */
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+.animated-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Chatbot Styles */
+#chatbot-window {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+.chat-message {
+    animation: slideInFade 0.4s ease-out forwards;
+}
+@keyframes slideInFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+#chatbot-toggle-btn {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}

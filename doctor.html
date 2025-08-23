@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CureTech - Doctors Directory</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f9f9fa;
+      margin: 0;
+    }
+    .container {
+      max-width: 1350px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #0001;
+    }
+    h1 {
+      text-align: center;
+      color: #18bfa6;
+    }
+    .searchbar {
+      display: block;
+      width: 80%;
+      margin: 0 auto 25px auto;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #18bfa650;
+      font-size: 1em;
+    }
+    .doctor-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .doctor-card {
+      background: #ecf6f5;
+      border-radius: 10px;
+      box-shadow: 0 1px 9px #21a2ae28;
+      padding: 18px 12px 14px 12px;
+      position: relative;
+      text-align: center;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .doctor-card:hover {
+      box-shadow: 0 8px 28px #18bfa630;
+      background: #e8fbf9;
+    }
+    .doctor-img {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #249eac;
+      margin-bottom: 10px;
+    }
+    .doctor-name {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #146a67;
+    }
+    .doctor-spec {
+      display: inline-block;
+      background: #20bfa9;
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 24px;
+      margin-top: 7px;
+      cursor: pointer;
+      font-size: 0.98em;
+      margin-bottom: 5px;
+    }
+    .doctor-logo-modal, .doctor-spec-modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.4);
+      align-items: center; justify-content: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 2em 2em 1em 2em;
+      border-radius: 16px;
+      box-shadow: 0 10px 28px #0002;
+      min-width: 300px;
+      max-width: 90vw;
+      text-align: center;
+      animation: popup 0.3s ease;
+    }
+    @keyframes popup {
+      from { transform: scale(0.95); opacity: 0.4;}
+      to { transform: scale(1); opacity: 1;}
+    }
+    .modal-close {
+      display: block;
+      background: #20bfa9;
+      color: #fff;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 36px;
+      position: absolute;
+      font-size: 1.4em;
+      right: 14px; top: 10px;
+      cursor: pointer;
+    }
+    .doctor-logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 12px;
+      border-radius: 12px;
+    }
+    @media (max-width: 700px) {
+      .doctor-list {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Doctors Directory — CureTech</h1>
+    <input class="searchbar" type="text" id="searchInput" placeholder="Search for doctors or specialisation..."/>
+
+    <div class="doctor-list" id="doctorList">
+      <!-- DOCTOR CARDS will be injected by JS -->
+    </div>
+  </div>
+
+  <!-- Modal for logo -->
+  <div class="doctor-logo-modal" id="doctorLogoModal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeLogoModal()">&times;</span>
+      <img id="modalLogo" class="doctor-logo"
+      src="" alt="Doctor's Specialisation Logo"/>
+      <div id="modalDoctorName" style="margin-top:12px; font-weight:700;"></div>
+      <div id="modalDoctorSpec" style="color:#168981; margin-top:2px; margin-bottom:8px;"></div>
+    </div>
+  </div>
+  <!-- Modal for specialisation -->
+  <div class="doctor-spec-modal" id="doctorSpecModal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeSpecModal()">&times;</span>
+      <div style="font-size:1.2em; font-weight:700;" id="modalSpecTitle"></div>
+      <div id="modalSpecDetails"></div>
+    </div>
+  </div>
+
+  <script>
+    // Sample data for 20 doctors with variety of specializations and logo links
+    const doctors = [
+      {
+        name: "Dr. Arjun Sharma",
+        img: "https://images.pond5.com/portrait-indian-doctor-young-photo-074407368_iconl.jpeg",
+        spec: "Cardiologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/504/504201.png",
+        details: "Specializes in heart health, including interventional cardiology, ECG, angioplasty, pacemaker implantation."
+      },
+      {
+        name: "Dr. Meera Singh",
+        img: "https://images.pond5.com/portrait-indian-female-doctor-photo-144432306_iconl.jpeg",
+        spec: "Orthopedic Surgeon",
+        logo: "https://cdn-icons-png.flaticon.com/512/3131/3131829.png",
+        details: "Expert in bone/joint issues: joint replacement, fracture repair, arthroscopy, sports injuries."
+      },
+      {
+        name: "Dr. Priya Nair",
+        img: "https://images.pond5.com/female-indian-doctor-portrait-photo-074408208_iconl.jpeg",
+        spec: "Pediatrician",
+        logo: "https://cdn-icons-png.flaticon.com/512/625/625063.png",
+        details: "Expert in child and adolescent medicine: neonatology, pediatric cardiology, asthma, growth disorders."
+      },
+      {
+        name: "Dr. Rakesh Menon",
+        img: "https://images.pond5.com/portrait-indian-male-doctor-photo-073532507_iconl.jpeg",
+        spec: "Neurosurgeon",
+        logo: "https://cdn-icons-png.flaticon.com/512/851/851124.png",
+        details: "Specializes in brain and nervous system: tumor removal, brain surgery, aneurysm clipping, spinal fusion."
+      },
+      {
+        name: "Dr. Sunita Bhalla",
+        img: "https://images.pond5.com/portrait-indian-doctor-young-photo-074407306_iconl.jpeg",
+        spec: "Dermatologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/2921/2921959.png",
+        details: "Skin specialist: acne, eczema, psoriasis treatments, cosmetic procedures, mole removal."
+      },
+      {
+        name: "Dr. Raj Patel",
+        img: "https://images.pond5.com/portrait-indian-male-doctor-photo-073532383_iconl.jpeg",
+        spec: "General Surgeon",
+        logo: "https://cdn-icons-png.flaticon.com/512/1083/1083643.png",
+        details: "Performs abdomen, breast, thyroid, and hernia surgeries."
+      },
+      {
+        name: "Dr. Preeti Deshmukh",
+        img: "https://images.pond5.com/portrait-indian-doctor-young-photo-074408511_iconl.jpeg",
+        spec: "Gynecologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/387/387561.png",
+        details: "Women's health: pregnancy, childbirth, ovarian and uterine surgery."
+      },
+      {
+        name: "Dr. Neeraj Agarwal",
+        img: "https://images.pond5.com/indian-male-doctor-portrait-photo-074408326_iconl.jpeg",
+        spec: "ENT Specialist",
+        logo: "https://cdn-icons-png.flaticon.com/512/3280/3280033.png",
+        details: "Expert in ear, nose, throat: sinus surgery, cochlear implant, tonsillectomy."
+      },
+      {
+        name: "Dr. Kavita Kumar",
+        img: "https://images.pond5.com/portrait-indian-female-doctor-photo-144432154_iconl.jpeg",
+        spec: "Nephrologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/4205/4205726.png",
+        details: "Kidney specialist: dialysis, transplant, chronic kidney disease."
+      },
+      {
+        name: "Dr. Mohan Joshi",
+        img: "https://images.pond5.com/portrait-indian-male-doctor-photo-073532438_iconl.jpeg",
+        spec: "Ophthalmologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/4384/4384301.png",
+        details: "Eye specialist: cataract, LASIK, glaucoma and retina surgery."
+      },
+      {
+        name: "Dr. Shefali Dutta",
+        img: "https://images.pond5.com/portrait-indian-doctor-photo-074407379_iconl.jpeg",
+        spec: "Gastroenterologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
+        details: "Digestive system: endoscopy, colonoscopy, liver disease."
+      },
+      {
+        name: "Dr. Vivek Choudhary",
+        img: "https://images.pond5.com/portrait-indian-male-doctor-photo-073532435_iconl.jpeg",
+        spec: "Pulmonologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/4205/4205697.png",
+        details: "Lung specialist: COPD, asthma, lung surgery."
+      },
+      {
+        name: "Dr. Ritu Kapoor",
+        img: "https://images.pond5.com/portrait-indian-female-doctor-photo-144432151_iconl.jpeg",
+        spec: "Oncologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/630/630669.png",
+        details: "Cancer specialist: chemotherapy, tumor surgery."
+      },
+      {
+        name: "Dr. Suresh Prasad",
+        img: "https://images.pond5.com/portrait-indian-male-doctor-photo-073532505_iconl.jpeg",
+        spec: "Endocrinologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/679/679719.png",
+        details: "Hormone specialist: diabetes, thyroid, metabolic surgery."
+      },
+      {
+        name: "Dr. Deepa Mishra",
+        img: "https://images.pond5.com/portrait-indian-doctor-photo-074407406_iconl.jpeg",
+        spec: "Rheumatologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/2780/2780938.png",
+        details: "Expert in arthritis, joint pain, autoimmune surgery support."
+      },
+      {
+        name: "Dr. Anand Raj",
+        img: "https://images.pond5.com/portrait-indian-male-doctor-photo-073533353_iconl.jpeg",
+        spec: "Pathologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/2548/2548713.png",
+        details: "Lab expert: surgical specimens, cancer diagnosis."
+      },
+      {
+        name: "Dr. Nisha Kumari",
+        img: "https://images.pond5.com/portrait-indian-doctor-photo-074408228_iconl.jpeg",
+        spec: "Radiologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/2758/2758794.png",
+        details: "Imaging specialist: CT, MRI, ultrasound guidance for surgery."
+      },
+      {
+        name: "Dr. Alok Sinha",
+        img: "https://images.pond5.com/portrait-indian-doctor-young-photo-074407327_iconl.jpeg",
+        spec: "Anesthesiologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/2636/2636568.png",
+        details: "Provides anesthesia during surgery, critical care support."
+      },
+      {
+        name: "Dr. Garima Dhawan",
+        img: "https://images.pond5.com/portrait-indian-doctor-photo-074408217_iconl.jpeg",
+        spec: "Plastic Surgeon",
+        logo: "https://cdn-icons-png.flaticon.com/512/1055/1055472.png",
+        details: "Cosmetic/reconstructive surgery: burns, trauma, rhinoplasty."
+      },
+      {
+        name: "Dr. Sameer Jain",
+        img: "https://images.pond5.com/portrait-indian-male-doctor-photo-073533370_iconl.jpeg",
+        spec: "Urologist",
+        logo: "https://cdn-icons-png.flaticon.com/512/567/567872.png",
+        details: "Urinary system: stone removal, prostate, bladder surgery."
+      }
+      // You can duplicate or randomise doctors to obtain 10-15 per specialization for demonstration.
+    ];
+
+    // Fill the doctor cards
+    function renderDoctors(filterText = '') {
+      const doctorList = document.getElementById('doctorList');
+      doctorList.innerHTML = '';
+
+      let filteredDoctors = filterText
+        ? doctors.filter(doc => doc.name.toLowerCase().includes(filterText.toLowerCase()) || doc.spec.toLowerCase().includes(filterText.toLowerCase()))
+        : doctors;
+
+      filteredDoctors.forEach((doctor, idx) => {
+        doctorList.innerHTML += `
+          <div class="doctor-card" onclick="showLogoModal(${idx})">
+            <img class="doctor-img" src="${doctor.img}" alt="${doctor.name}" />
+            <div class="doctor-name">${doctor.name}</div>
+            <div class="doctor-spec" onclick="event.stopPropagation(); showSpecModal(${idx})">${doctor.spec}</div>
+          </div>
+        `;
+      });
+      if (filteredDoctors.length === 0) {
+        doctorList.innerHTML = `<div>No doctors found.</div>`;
+      }
+    }
+
+    // Modals functionality
+    function showLogoModal(idx) {
+      document.getElementById('doctorLogoModal').style.display = 'flex';
+      document.getElementById('modalLogo').src = doctors[idx].logo;
+      document.getElementById('modalDoctorName').textContent = doctors[idx].name;
+      document.getElementById('modalDoctorSpec').textContent = doctors[idx].spec;
+    }
+    function closeLogoModal() {
+      document.getElementById('doctorLogoModal').style.display = 'none';
+      document.getElementById('modalLogo').src = '';
+      document.getElementById('modalDoctorName').textContent = '';
+      document.getElementById('modalDoctorSpec').textContent = '';
+    }
+    function showSpecModal(idx) {
+      document.getElementById('doctorSpecModal').style.display = 'flex';
+      document.getElementById('modalSpecTitle').textContent = doctors[idx].spec;
+      document.getElementById('modalSpecDetails').textContent = doctors[idx].details;
+    }
+    function closeSpecModal() {
+      document.getElementById('doctorSpecModal').style.display = 'none';
+      document.getElementById('modalSpecTitle').textContent = '';
+      document.getElementById('modalSpecDetails').textContent = '';
+    }
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', function() {
+      renderDoctors(this.value);
+    });
+
+    // Render initial doctors
+    renderDoctors();
+
+    // Close modals on backdrop click
+    document.getElementById('doctorLogoModal').onclick = function(e){
+      if(e.target === this) closeLogoModal();
+    };
+    document.getElementById('doctorSpecModal').onclick = function(e){
+      if(e.target === this) closeSpecModal();
+    };
+  </script>
+</body>
+</html>
